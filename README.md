@@ -5,6 +5,8 @@
 A modern, ergonomic tmux configuration built for daily use —
 with sane defaults, Vi-style pane splits, F-key window management, and plugin support.
 
+![tmux-config screenshot](./assets/Screenshot.png)
+
 </div>
 
 ---
@@ -25,6 +27,20 @@ with sane defaults, Vi-style pane splits, F-key window management, and plugin su
 | Copy-mode drag | exits copy mode | stays in copy mode |
 | Terminal passthrough | off | on (supports yazi image preview, kitty, ghostty) |
 | Extended key support | off | on (xterm-256color, kitty, ghostty) |
+
+---
+
+### Status Bar
+
+```
+tmux: <session> | ... windows ...              <hostname> | YYYY-MM-DD HH:MM:SS
+```
+
+- Left: session name
+- Center: window list — current window is **bold + reversed**; windows with activity are underlined
+- Right: hostname and live clock (updates every second)
+- Background is transparent (inherits terminal background)
+- The top border of the status bar is rendered via pane border, giving a clean overline effect
 
 ---
 
@@ -73,7 +89,17 @@ and also need install TPM as above.
 
 The prefix is **`Ctrl-S`** (instead of the default `Ctrl-B`).
 
-Press `prefix + Ctrl-S` to send the prefix through to a nested tmux session.
+This config uses **Emacs-style** mode keys, so `Ctrl-B` is kept available for the familiar Emacs/readline backward-character command in shells, REPLs, and editor-like prompts.
+
+`Ctrl-S` gives tmux its own prefix while preserving that editing muscle memory.
+
+> On Linux terminals, `Ctrl-S` is traditionally consumed by software flow control as XOFF (`^S` / DC3), which pauses terminal output until `Ctrl-Q` sends XON.
+>
+> This is not a Unix signal like `SIGSTOP`; it is terminal-driver flow control.
+> If your terminal consumes `Ctrl-S` before tmux sees it, disable XON/XOFF flow control in the outer shell: `stty -ixon`
+
+
+Press `prefix + Ctrl-S` to send the prefix through to a **nested** tmux session.
 
 ---
 
@@ -165,17 +191,3 @@ Press **`F12`** to toggle nested-tmux pass-through mode. In this mode:
 | [TPM](https://github.com/tmux-plugins/tpm) | Plugin manager | `prefix+I` install, `prefix+U` update, `prefix+Alt+u` clean |
 | [tmux-resurrect](https://github.com/tmux-plugins/tmux-resurrect) | Save/restore sessions across reboots | `prefix+Alt+Shift+S` save, `prefix+Alt+Shift+R` restore |
 | [treemux](https://github.com/kiyoon/treemux) | Neovim-powered sidebar file tree | `prefix+Tab` toggle, `prefix+Backspace` toggle & focus |
-
----
-
-## Status Bar
-
-```
-tmux: <session> | ... windows ...              <hostname> | YYYY-MM-DD HH:MM:SS
-```
-
-- Left: session name
-- Center: window list — current window is **bold + reversed**; windows with activity are underlined
-- Right: hostname and live clock (updates every second)
-- Background is transparent (inherits terminal background)
-- The top border of the status bar is rendered via pane border, giving a clean overline effect
